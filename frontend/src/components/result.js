@@ -1,22 +1,43 @@
 import {UrlManager} from "../utils/url-manager.js";
+import {CustomHttp} from "../services/custom-http.js";
+import config from "../../config/config.js";
+import {Auth} from "../services/auth.js";
 
 export class Result {
     constructor() {
         this.routeParams = UrlManager.getQueryParams();
-
-        document.getElementById('result-score').innerText = this.routeParams.score + '/' + this.routeParams.total;
-        const viewingElement = document.getElementById("viewing");
-        if (viewingElement) {
-            viewingElement.onclick = (event) => {
-                event.preventDefault();
-                this.progressResult();
-            };
-        } else {
-            console.error('Элемент с ID "viewing" не найден на странице.');
-        }
+        this.init();
     }
 
+    async init() {
+        const userInfo = Auth.getUserInfo();
+        if (!userInfo) {
+            location.href = '#/';
+        }
+        if (this.routeParams.id) {
+            try {
+                const result = await CustomHttp.request(config.host + '/tests/' + this.routeParams.id + '/result?userId=' + userInfo.userId);
+                if (result) {
+                    if (result.error) {
+                        throw new Error(result.error);
+                    }
+                    document.getElementById('result-score').innerText = result.score + '/' + result.total;
+                    const viewingElement = document.getElementById("viewing");
+                    if (viewingElement) {
+                        viewingElement.onclick = (event) => {
+                            event.preventDefault();
+                            this.progressResult();
+                        };
+                    }
+                    return;
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        location.href = '#/';
+    }
     progressResult() {
-        location.href = `#/answers?name=${this.routeParams.name}&lastName=${this.routeParams.lastName}&email=${this.routeParams.email}&id=${this.routeParams.id}&idResult=${this.routeParams.idResult}&score=${this.routeParams.score}&total=${this.routeParams.total}`;
+        location.href = '#/answers';
     }
 }

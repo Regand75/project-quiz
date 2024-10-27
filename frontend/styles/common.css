@@ -118,6 +118,28 @@ a.button {
     border: 1px solid #e2dfe7;
 }
 
+.href-element {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.href-element a {
+    font-size: 17px;
+    line-height: 20px;
+    color: #6933DC;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.href-element a:hover {
+    text-decoration: underline;
+}
+
+.href-element a img {
+    margin-left: 13px;
+}
+
 .footer {
     text-align: center;
     padding: 40px 0;

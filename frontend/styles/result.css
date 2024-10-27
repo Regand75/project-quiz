@@ -1,28 +1,29 @@
 .result {
     padding-top: 140px;
-    padding-bottom: 91px;
+    padding-bottom: 31px;
     text-align: center;
 }
 
 .result .container {
     display: flex;
-    align-items: center;
     flex-direction: column;
     position: relative;
 }
 
 .result-image {
     position: absolute;
-    top: 225px;
+    top: 87px;
     z-index: -1;
 }
 
 .result-title {
+    align-self: center;
     max-width: 588px;
     margin-bottom: 60px;
 }
 
 .result-score {
+    align-self: center;
     background: url('/images/result-image.png') center / cover;
     width: 480px;
     height: 388px;
@@ -33,4 +34,8 @@
     line-height: 198px;
     font-family: 'MuseoSansCyrlBold', sans-serif;
     color: #ffffff;
+}
+
+.result-correct-answers {
+    margin-top: 80px;
 }
