@@ -38,6 +38,6 @@ export class Result {
         location.href = '#/';
     }
     progressResult() {
-        location.href = '#/answers';
+        location.href = '#/answers?id=' + this.routeParams.id;
     }
 }
