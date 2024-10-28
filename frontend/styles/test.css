@@ -90,7 +90,9 @@
     font-size: 20px;
     line-height: 24px;
     margin-bottom: 20px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 33px 1fr;
+    align-items: normal;
 }
 
 .test-question-option label {

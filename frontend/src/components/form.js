@@ -7,6 +7,13 @@ export class Form {
         this.agreeElement = null;
         this.processElement = null;
         this.page = page; // signup или login
+
+        const accessToken = localStorage.getItem(Auth.accessTokenKey);
+        if (accessToken) {
+            location.href = '#/choice';
+            return;
+        }
+
         this.fields = [
             {
                 name: 'email',
@@ -19,7 +26,7 @@ export class Form {
                 name: 'password',
                 id: 'password',
                 element: null,
-                regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_])[0-9a-zA-Z\W_]{8,}$/,
+                regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
                 valid: false,
             },
         ];
@@ -101,9 +108,8 @@ export class Form {
                         if (result.error || !result.user) {
                             throw new Error(result.message);
                         }
-                        Auth.setUserEmail({
-                            email: result.user.email,
-                        });
+                        // Сохраняем email в localStorage после успешного ответа
+                        Auth.setUserEmail(email);
                     }
                 } catch (error) {
                     return console.log(error);
@@ -126,6 +132,8 @@ export class Form {
                         fullName: result.fullName,
                         userId: result.userId,
                     });
+                    // Сохраняем email в localStorage после успешного логина
+                    Auth.setUserEmail(email);
                     location.href = '#/choice';
                 }
             } catch (error) {

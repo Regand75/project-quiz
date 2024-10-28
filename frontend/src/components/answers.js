@@ -14,8 +14,10 @@ export class Answers {
     }
 
     async init() {
+        // Извлекаем значение из localStorage
         this.userInfo = Auth.getUserInfo();
         this.userEmail = Auth.getUserEmail();
+        this.userEmail = this.userEmail.replace(/^"|"$/g, ''); // Убираем лишние кавычки
         if (!this.userInfo || !this.userEmail) {
             location.href = '#/';
         }
@@ -28,7 +30,6 @@ export class Answers {
                         throw new Error(result.error);
                     }
                     this.infoAboutTest = result.test;
-                    console.log(this.infoAboutTest);
                     this.processAnswers();
                     return;
                 }
@@ -45,7 +46,7 @@ export class Answers {
 
         // Информация о пользователе
         const { fullName } = this.userInfo;
-        const { email } = this.userEmail;
+        const email = this.userEmail;
         document.getElementById('answers-user').innerHTML = `Тест выполнил <span>${fullName}, ${email}</span>`;
 
         // Обработка кнопки "Обратно к результату теста"
