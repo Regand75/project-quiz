@@ -22,13 +22,7 @@ export class Result {
                         throw new Error(result.error);
                     }
                     document.getElementById('result-score').innerText = result.score + '/' + result.total;
-                    const viewingElement = document.getElementById("viewing");
-                    if (viewingElement) {
-                        viewingElement.onclick = (event) => {
-                            event.preventDefault();
-                            this.progressResult();
-                        };
-                    }
+                    this.activeViewingElement();
                     return;
                 }
             } catch (error) {
@@ -37,6 +31,24 @@ export class Result {
         }
         location.href = '#/';
     }
+
+    activeViewingElement() {
+        const viewingElement = document.getElementById("viewing");
+        const arrowImageElement = document.getElementById("arrow-image");
+        if (viewingElement) {
+            if (Number(this.routeParams.id) !== 1) {
+                viewingElement.classList.add('disabled-link');
+                arrowImageElement.src = '/images/small-arrow-answer.png';
+            } else {
+                viewingElement.classList.remove('disabled-link');
+                arrowImageElement.src = '/images/small-arrow.png';
+            }
+            viewingElement.onclick = () => {
+                this.progressResult();
+            };
+        }
+    }
+
     progressResult() {
         location.href = '#/answers?id=' + this.routeParams.id;
     }

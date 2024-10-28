@@ -147,6 +147,12 @@
     margin-left: 13px;
 }
 
+.href-element .disabled-link {
+    pointer-events: none;
+    color: #e2dfe7;
+    text-decoration: none;
+}
+
 input[type='radio'] {
     appearance: none;
     -webkit-appearance: none;

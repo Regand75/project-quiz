@@ -101,6 +101,9 @@ export class Form {
                         if (result.error || !result.user) {
                             throw new Error(result.message);
                         }
+                        Auth.setUserEmail({
+                            email: result.user.email,
+                        });
                     }
                 } catch (error) {
                     return console.log(error);

@@ -62,6 +62,14 @@ export class Choice {
                 const choiceOptionArrowElement = document.createElement('div');
                 choiceOptionArrowElement.className = 'choice-option-arrow';
 
+                const result = this.testResult.find(item => item.testId === quiz.id);
+                if (result) {
+                    const choiceOptionResultElement = document.createElement('div');
+                    choiceOptionResultElement.className = 'choice-option-result';
+                    choiceOptionResultElement.innerHTML = '<div>Результат</div><div>' + result.score + '/' + result.total + '</div>';
+                    choiceOptionElement.appendChild(choiceOptionResultElement);
+                }
+
                 const choiceOptionImageElement = document.createElement('img');
                 choiceOptionImageElement.setAttribute('src', 'images/arrow.png');
                 choiceOptionImageElement.setAttribute('alt', 'Стрелка');

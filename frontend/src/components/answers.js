@@ -6,21 +6,22 @@ import config from "../../config/config.js";
 export class Answers {
     constructor() {
         this.answersBlockQuestions = null;
-        // this.quiz = null;
+        this.userInfo = null;
+        this.userEmail = null;
         this.infoAboutTest = null;
-        // this.quizRight = null;
         this.routeParams = UrlManager.getQueryParams();
         this.init();
     }
 
     async init() {
-        const userInfo = Auth.getUserInfo();
-        if (!userInfo) {
+        this.userInfo = Auth.getUserInfo();
+        this.userEmail = Auth.getUserEmail();
+        if (!this.userInfo || !this.userEmail) {
             location.href = '#/';
         }
         if (this.routeParams.id) {
             try {
-                const result = await CustomHttp.request(config.host + '/tests/' + this.routeParams.id + '/result/details?userId=' + userInfo.userId);
+                const result = await CustomHttp.request(config.host + '/tests/' + this.routeParams.id + '/result/details?userId=' + this.userInfo.userId);
 
                 if (result) {
                     if (result.error) {
@@ -43,8 +44,9 @@ export class Answers {
         document.getElementById('answers-info-title-test').innerText = this.infoAboutTest?.name || "Название теста";
 
         // Информация о пользователе
-        // const { name, lastName, email } = this.routeParams;
-        // document.getElementById('answers-user').innerHTML = `Тест выполнил <span>${name} ${lastName}, ${email}</span>`;
+        const { fullName } = this.userInfo;
+        const { email } = this.userEmail;
+        document.getElementById('answers-user').innerHTML = `Тест выполнил <span>${fullName}, ${email}</span>`;
 
         // Обработка кнопки "Обратно к результату теста"
         const answersBackResult = document.getElementById("back-result");

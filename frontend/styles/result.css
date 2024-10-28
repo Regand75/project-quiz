@@ -39,3 +39,9 @@
 .result-correct-answers {
     margin-top: 80px;
 }
+
+.href-element .disabled-link {
+    pointer-events: none;
+    color: #e2dfe7;
+    text-decoration: none;
+}

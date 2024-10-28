@@ -46,6 +46,7 @@ export class Test {
 
         this.passButtonElement = document.getElementById('pass');
         this.passButtonElement.onclick = this.move.bind(this, 'pass');
+        this.arrowImageElement = document.getElementById('arrow-image');
 
         this.prevButtonElement = document.getElementById('prev');
         this.prevButtonElement.onclick = this.move.bind(this, 'prev');
@@ -119,8 +120,12 @@ export class Test {
         });
         if (chosenOption && chosenOption.chosenAnswerId) {
             this.nextButtonElement.removeAttribute('disabled');
+            this.passButtonElement.classList.add('disabled-link');
+            this.arrowImageElement.src = '/images/small-arrow-answer.png';
         } else {
             this.nextButtonElement.setAttribute('disabled', 'disabled');
+            this.passButtonElement.classList.remove('disabled-link');
+            this.arrowImageElement.src = '/images/small-arrow.png';
         }
         if (this.currentQuestionIndex === this.quiz.questions.length) {
             this.nextButtonElement.innerText = 'Завершить';
@@ -136,6 +141,8 @@ export class Test {
 
     chooseAnswer() {
         this.nextButtonElement.removeAttribute('disabled');
+        this.passButtonElement.classList.add('disabled-link');
+        this.arrowImageElement.src = '/images/small-arrow-answer.png';
     }
 
     move(action) {
